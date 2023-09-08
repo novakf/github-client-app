@@ -1,0 +1,62 @@
+.title {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 24px;
+}
+
+.subtitle,
+.firstText {
+  color: #afadb5;
+  text-align: center;
+  margin: 0;
+}
+
+.firstText {
+  margin-top: 30px;
+}
+
+:root {
+  background: #f6f8fa;
+}
+
+.dropdownn {
+  margin: 18px 0 20px 100px;
+}
+
+.typeInput {
+  display: flex;
+  max-width: 100%;
+  margin-left: 100px;
+  margin-right: 206px;
+}
+
+.button {
+  margin-left: 19px;
+  border-radius: 6px;
+  background: #1f883d;
+}
+
+.repsList {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 80px;
+  margin: 36px 103px 41px 100px;
+
+  @media (max-width: 1100px) {
+    justify-content: center;
+  }
+}
+
+.repCard {
+  max-width: 360px;
+
+  @media (max-width: 1475px) {
+    max-width: 270px;
+  }
+
+  @media (max-width: 1205px) {
+    max-width: 360px;
+  }
+}

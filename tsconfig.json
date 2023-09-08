@@ -23,7 +23,9 @@
       "components": ["components/*"],
       "config": ["config/*"],
       "styles": ["styles/*"],
-      "utils": ["utils/*"]
+      "utils": ["utils/*"],
+      "App": ["App/*"],
+      "icons": ["icons/*"]
     }
   },
   "include": ["src"],
