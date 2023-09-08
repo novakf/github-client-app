@@ -1,0 +1,30 @@
+.filename {
+  color: #000;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  display: flex;
+  padding: var(--space-m, 16px);
+  align-items: flex-start;
+}
+
+.readmeContainer {
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  margin-bottom: 179px;
+}
+
+.text {
+  display: flex;
+  padding: 32px;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1 0 0;
+}

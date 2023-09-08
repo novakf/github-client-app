@@ -11,17 +11,21 @@ import Card from 'components/Card';
 import { Link } from 'react-router-dom';
 import { GITHUB_API_TOKEN } from 'App/constants.ts';
 import styles from './MainPage.module.scss';
+import { RepositoryType } from 'App/types';
 
-const octokit = new Octokit({
+export const octokit = new Octokit({
   auth: GITHUB_API_TOKEN,
 });
 
-const oktokitGetReps = async (org: string, setReps: React.Dispatch<any>, setError: React.Dispatch<string>) => {
+const oktokitGetReps = async (
+  org: string,
+  setReps: React.Dispatch<RepositoryType[]>,
+  setError: React.Dispatch<string>,
+) => {
   try {
     const result = await octokit.request('GET /orgs/{org}/repos', {
       org: org,
     });
-    console.log(result);
     setError('');
     setReps(result.data);
   } catch (error: any) {
@@ -30,7 +34,11 @@ const oktokitGetReps = async (org: string, setReps: React.Dispatch<any>, setErro
 };
 
 // has queries limit
-const axiosGetReps = async (org: string, setReps: React.Dispatch<any>, setError: React.Dispatch<string>) => {
+const axiosGetReps = async (
+  org: string,
+  setReps: React.Dispatch<RepositoryType[]>,
+  setError: React.Dispatch<string>,
+) => {
   let url = `https://api.github.com/orgs/${org}/repos`;
 
   axios
@@ -52,11 +60,15 @@ const DropdownOptions = (): Option[] => {
   ];
 };
 
-const MainPage: React.FC = () => {
+type Props = {
+  reps: RepositoryType[];
+  setReps: (value: RepositoryType[]) => void;
+};
+
+const MainPage: React.FC<Props> = ({ reps, setReps }) => {
   const [value, setValue] = useState<Option[]>([]);
-  const [inputValue, setInputValue] = useState<string>('ktsstudio');
-  const [reps, setReps] = useState<any>([]);
-  const [org, setOrg] = useState<string>('ktsstudio');
+  const [inputValue, setInputValue] = useState<string>('');
+  const [org, setOrg] = useState<string>('');
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
@@ -64,7 +76,8 @@ const MainPage: React.FC = () => {
     else org !== '' && axiosGetReps(org, setReps, setError);
   }, [org]);
 
-  console.log(reps);
+  if (reps.length !== 0) localStorage.setItem('reps', JSON.stringify(reps));
+  if (error) localStorage.removeItem('reps');
 
   return (
     <>
@@ -92,9 +105,9 @@ const MainPage: React.FC = () => {
 
       {!error && reps.length !== 0 && (
         <div className={styles.repsList}>
-          {(reps as any).map((rep: any) => {
+          {(reps as any).map((rep: any, i: number) => {
             return (
-              <Link key={rep.id} to={`/repository/${rep.id}`}>
+              <Link key={i} to={`/repository/${i}`}>
                 <div className={styles.repCard}>
                   <Card
                     image={rep.owner.avatar_url}
