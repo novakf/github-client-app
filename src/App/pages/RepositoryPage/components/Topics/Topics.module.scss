@@ -1,0 +1,18 @@
+.topics {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.topic {
+  color: #06c;
+  border-radius: 20px;
+  background: #daedff;
+  padding: 4px 16px;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}

@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Languages.module.scss';
-import axios from 'axios';
 import CircleIcon from 'icons/CircleIcon';
+import { Map } from 'App/types';
+import { getData } from 'App/model';
 
 type Props = {
   languages_url: string;
 };
 
-export interface Map {
-  [key: string]: number;
-}
-
 const Languages: React.FC<Props> = ({ languages_url }) => {
   const [languages, setLanguages] = useState<Map>();
 
   useEffect(() => {
-    axios.get(languages_url).then((res) => setLanguages(res.data));
+    getData(languages_url, setLanguages);
   }, []);
 
   let sum = 0;

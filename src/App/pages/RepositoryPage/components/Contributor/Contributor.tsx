@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './Contributor.module.scss';
 import { ContributorType, ProfileType } from 'App/types';
-import axios from 'axios';
+import { getData } from 'App/model';
 
 type Props = {
   contributor: ContributorType;
@@ -11,7 +11,7 @@ const Contributor: React.FC<Props> = ({ contributor }) => {
   const [data, setData] = useState<ProfileType>();
 
   useEffect(() => {
-    axios.get(contributor.url).then((res) => setData(res.data));
+    getData(contributor.url, setData);
   }, []);
 
   return (

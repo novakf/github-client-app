@@ -19,11 +19,16 @@
   background: #f6f8fa;
 }
 
-.dropdownn {
+//  .dropdownn {
+//    margin: 18px 0 20px 100px;
+//  }
+
+.topicInput {
+  max-width: 30%;
   margin: 18px 0 20px 100px;
 }
 
-.typeInput {
+.orgInput {
   display: flex;
   max-width: 100%;
   margin-left: 100px;
@@ -38,15 +43,11 @@
 
 .repsList {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   flex-wrap: wrap;
   align-items: center;
   gap: 80px;
   margin: 36px 103px 41px 100px;
-
-  @media (max-width: 1100px) {
-    justify-content: center;
-  }
 }
 
 .repCard {

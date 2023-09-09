@@ -1,3 +1,7 @@
+export interface Map {
+  [key: string]: number;
+}
+
 export type RepositoryType = {
   id: number;
   node_id: string;

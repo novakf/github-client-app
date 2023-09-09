@@ -46,58 +46,10 @@
   gap: 20px;
 }
 
-.topics {
-  display: flex;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.topic {
-  color: #06c;
-  border-radius: 20px;
-  background: #daedff;
-  padding: 4px 16px;
-  text-align: center;
-  font-family: Roboto;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.stats {
-  display: flex;
-  width: 92px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.stat {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  height: 18px;
-}
-
-.statText {
-  color: #afadb5;
-}
-
 .contributors_languages {
   display: flex;
-  height: 189px;
   align-items: flex-start;
   gap: 80px;
-}
-
-.contributors {
-  display: flex;
-  width: 290px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
 }
 
 .languages {
@@ -106,28 +58,4 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 8px;
-}
-
-.contributorTitle {
-  color: #000;
-  font-family: Roboto;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 22px; /* 122.222% */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 5px;
-}
-
-.contributorsNumber {
-  color: rgba(0, 0, 0, 0.62);
-  font-family: Roboto;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 10px; /* 100% */
-  flex-shrink: 0;
-  margin-left: -17px;
 }

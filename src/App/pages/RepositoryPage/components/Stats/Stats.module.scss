@@ -1,0 +1,18 @@
+.stats {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.stat {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  height: 18px;
+}
+
+.statText {
+  color: #afadb5;
+}
