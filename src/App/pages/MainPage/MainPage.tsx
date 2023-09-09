@@ -77,7 +77,13 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
 
       <div className={styles.orgInput}>
         <Input value={inputValue} onChange={setInputValue} placeholder="Enter organization name" />
-        <Button className={styles.button} onClick={() => setOrg(inputValue)}>
+        <Button
+          className={styles.button}
+          onClick={() => {
+            localStorage.removeItem('reps');
+            setOrg(inputValue);
+          }}
+        >
           <SearchIcon />
         </Button>
       </div>
@@ -102,12 +108,12 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
         </div>
       )}
       {!error && reps.length === 0 && (
-        <Text view="p-16" className={styles.firstText}>
+        <Text view="p-16" className={styles.notfoundText}>
           Repositories not found!
         </Text>
       )}
       {error && (
-        <Text view="p-16" className={styles.firstText}>
+        <Text view="p-16" className={styles.notfoundText}>
           Organization not found!
         </Text>
       )}

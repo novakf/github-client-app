@@ -45,9 +45,9 @@ const Languages: React.FC<Props> = ({ languages_url }) => {
                 style={{
                   width: `${Math.round((languages[language] / sum) * 271) - 2}px`,
                   backgroundColor: `${colorPicker(language)}`,
-                  borderRadius: `${i === 0 ? '6px 0 0 6px' : ''} ${
-                    i === Object.keys(languages).length - 1 ? '0 6px 6px 0' : ''
-                  }`,
+                  borderRadius: `${i === 0 && Object.keys(languages).length > 1 ? '6px 0 0 6px' : ''}
+                    ${i === Object.keys(languages).length - 1 && Object.keys(languages).length > 1 ? '0 6px 6px 0' : ''}
+                    ${Object.keys(languages).length === 1 ? '6px' : ''}`,
                 }}
               ></div>
             );

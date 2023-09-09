@@ -14,10 +14,12 @@ const Readme: React.FC<Props> = ({ repo }) => {
     getReadme(repo.owner.login, repo.name, setFile);
   }, []);
 
+  let fileWithoutSvgLink = file.replace(/<svg.*<\/svg>/g, '');
+
   return (
     <div className={styles.readmeContainer}>
-      <div className={styles.filename}>README.MD</div>
-      <div className={styles.text} dangerouslySetInnerHTML={{ __html: file }}></div>
+      <div className={styles.filename}>README.md</div>
+      <div className={styles.text} dangerouslySetInnerHTML={{ __html: fileWithoutSvgLink }}></div>
     </div>
   );
 };
