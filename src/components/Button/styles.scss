@@ -1,0 +1,47 @@
+@import "../constants.css";
+
+button {
+  color: var(--button-primary-text, #fff);
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  display: inline-flex;
+  padding: var(--space-s, 14px) var(--space-l, 20px);
+  justify-content: center;
+  align-items: center;
+  min-height: 52px;
+  gap: 10px;
+  border-radius: var(--border-radius, 0px);
+  border: none;
+  background: var(--button-primary-bg, #518581);
+
+  &:hover {
+    background: var(--button-primary-bg-hover);
+    cursor: pointer;
+  }
+
+  &.btn-disabled {
+    background: var(--button-primary-bg-disabled);
+    cursor: default;
+  }
+
+  &:active:not(:disabled) {
+    background-color: var(--button-primary-bg-active);
+  }
+
+  &.btn-loading {
+    pointer-events: none;
+  }
+}
+
+.loader {
+  margin: 0;
+  //border-top-color: var(--button-primary-text);
+  //border-left-color: var(--button-primary-text);
+  //border-bottom-color: var(--button-primary-text);
+  path {
+    fill: var(--button-primary-text);
+  }
+}

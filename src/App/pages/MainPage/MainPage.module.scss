@@ -1,0 +1,66 @@
+.title {
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 24px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.subtitle,
+.notfoundText {
+  color: #afadb5;
+  text-align: center;
+  margin: 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.firstText {
+  margin-top: 30px;
+}
+
+:root {
+  background: #f6f8fa;
+}
+
+//  .dropdownn {
+//    margin: 18px 0 20px 100px;
+//  }
+
+.topicInput {
+  max-width: 30%;
+  margin: 18px 0 20px 100px;
+}
+
+.orgInput {
+  display: flex;
+  max-width: 100%;
+  margin-left: 100px;
+  margin-right: 206px;
+  margin-bottom: 36px;
+}
+
+.button {
+  margin-left: 19px;
+  border-radius: 6px;
+  background: #1f883d;
+}
+
+.repsList {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 80px;
+  margin: 36px 103px 41px 100px;
+}
+
+.repCard {
+  max-width: 360px;
+
+  @media (max-width: 1475px) {
+    max-width: 270px;
+  }
+
+  @media (max-width: 1205px) {
+    max-width: 360px;
+  }
+}

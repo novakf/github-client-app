@@ -1,0 +1,44 @@
+.item {
+  align-items: center;
+  color: #000;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 22px; /* 122.222% */
+  & > a {
+    width: 40px;
+    text-align: center;
+  }
+}
+
+.icon {
+  path {
+    stroke: #000;
+  }
+  &:active {
+    path {
+      stroke: #1f883d;
+    }
+  }
+}
+
+.active {
+  color: #fff;
+  background: #1f883d;
+}
+
+.pagination {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  height: 60px;
+  justify-content: center;
+  position: relative;
+  width: 1000px;
+}

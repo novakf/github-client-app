@@ -1,0 +1,40 @@
+.contributor {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xxs, 8px);
+}
+
+.title {
+  color: var(--text-primary, #000);
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px; /* 122.222% */
+}
+
+.login {
+  color: var(--text-primary, #000);
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px; /* 125% */
+}
+
+.logo {
+  border-radius: 32px;
+  border: 1px solid #ecebeb;
+  background: lightgray;
+  width: 32px;
+  height: 32px;
+}
+
+.name {
+  color: #afadb5;
+  font-family: Roboto;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}

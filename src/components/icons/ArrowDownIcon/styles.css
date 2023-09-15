@@ -1,0 +1,13 @@
+@import '../../constants.css';
+
+.accent {
+  color: var(--text-accent);
+}
+
+.primary {
+  color: var(--text-primary);
+}
+
+.secondary {
+  color: var(--text-secondary);
+}

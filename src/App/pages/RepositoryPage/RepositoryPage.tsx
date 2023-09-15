@@ -1,0 +1,66 @@
+import ArrowLeftIcon from 'icons/ArrowLeftIcon';
+import React, { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import Text from 'components/Text';
+import LinkIcon from 'icons/LinkIcon';
+import { ContributorType, RepositoryType } from 'App/types';
+import Languages from 'App/pages/RepositoryPage/components/Languages';
+import Readme from 'App/pages/RepositoryPage/components/Readme';
+import { getData } from 'App/model';
+import Topics from 'App/pages/RepositoryPage/components/Topics';
+import Stats from 'App/pages/RepositoryPage/components/Stats';
+import Contributors from 'App/pages/RepositoryPage/components/Contributors';
+import styles from './RepositoryPage.module.scss';
+
+type Props = {
+  reps: RepositoryType[];
+};
+
+const RepositoryPage: React.FC<Props> = ({ reps }) => {
+  const [contributors, setContributors] = useState<ContributorType[]>([]);
+
+  let id = useParams().id;
+
+  let index = Number(id);
+
+  let currentRepo = reps[index];
+
+  useEffect(() => {
+    getData(currentRepo.contributors_url, setContributors);
+  }, []);
+
+  return currentRepo ? (
+    <div className={styles.repContainer}>
+      <div className={styles.titleContainer}>
+        <Link to={'/'}>
+          <ArrowLeftIcon />
+        </Link>
+        <img className={styles.logo} src={currentRepo.owner.avatar_url} alt="avatar" />
+        <Text className={styles.title} view="title">
+          {currentRepo.name}
+        </Text>
+      </div>
+      <div className={styles.repoInfo}>
+        {currentRepo.homepage && (
+          <a href={currentRepo.homepage} target="_blank" style={{ textDecoration: 'none' }}>
+            <Text view="p-16" weight="bold" className={styles.link}>
+              <LinkIcon className={styles.linkIcon} />
+              {currentRepo.homepage.split('').splice(8, currentRepo.homepage.length).join('')}
+            </Text>
+          </a>
+        )}
+        <Topics currentRepo={currentRepo} />
+        <Stats currentRepo={currentRepo} />
+        <div className={styles.contributors_languages}>
+          <Contributors contributors={contributors} />
+          <Languages languages_url={currentRepo.languages_url} />
+        </div>
+      </div>
+      <Readme repo={currentRepo} />
+    </div>
+  ) : (
+    <div>Repository not found</div>
+  );
+};
+
+export default RepositoryPage;

@@ -1,5 +1,8 @@
 # React + TypeScript + Vite
 
+!!If you need to send more, than 60 queries in hour, write your github personal token in file src/App/constants.ts:
+GITHUB_API_TOKEN = 'your_token'!!
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
