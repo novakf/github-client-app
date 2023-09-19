@@ -16,8 +16,8 @@ const Contributors: React.FC<Props> = ({ contributors }) => {
         <CircleIcon fill="#D9D9D9" />
         <div className={styles.contributorsNumber}>{contributors.length}</div>
       </div>
-      {contributors.map((contributor, i) => {
-        return <Contributor key={i} contributor={contributor} />;
+      {contributors.map((contributor) => {
+        return <Contributor key={contributor.id} contributor={contributor} />;
       })}
     </div>
   );

@@ -6,10 +6,10 @@ import SearchIcon from 'icons/SearchIcon';
 import Card from 'components/Card';
 import { Link } from 'react-router-dom';
 import { RepositoryType } from 'App/types';
-import PaginatedItems from './components/PaginatedItems';
 import { getReps } from 'App/model';
 import styles from './MainPage.module.scss';
 import StarIcon from 'icons/StarIcon';
+import InfiniteScroll from './components/InfiniteScroll';
 
 type Props = {
   reps: RepositoryType[];
@@ -22,9 +22,9 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
   if (reps[0]) repsOwner = reps[0].owner.login;
 
   const [topic, setTopic] = useState<string>(storedTopic ? storedTopic : '');
-  const [debouncedTopic, setDebouncedTopic] = React.useState('');
+  const [debouncedTopic, setDebouncedTopic] = React.useState(storedTopic);
   const [inputValue, setInputValue] = useState<string>(repsOwner);
-  const [org, setOrg] = useState<string>('');
+  const [org, setOrg] = useState<string>(repsOwner);
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
@@ -42,8 +42,6 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
     localStorage.setItem('topic', topic);
   }, [topic]);
 
-  console.log(debouncedTopic, topic);
-
   if (reps.length !== 0) localStorage.setItem('reps', JSON.stringify(reps));
   if (error) localStorage.removeItem('reps');
 
@@ -60,8 +58,6 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
       setOrg(value);
     }
   };
-
-  console.log(reps);
 
   return (
     <>
@@ -95,13 +91,16 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
       </div>
       {!error && reps.length !== 0 && (
         <div className={styles.repsList}>
-          <PaginatedItems itemsPerPage={6} condition={topicTarget} reps={reps}>
-            {reps.map((rep, i: number) => {
+          <InfiniteScroll
+            repsOwner={repsOwner}
+            itemsPerPage={6}
+            reps={reps.filter((rep) => topicTarget(rep.topics))}
+            renderRep={(rep) => {
               let date = new Date();
               if (rep.updated_at) date = new Date(rep.updated_at);
               let splicedDate = 'Updated ' + date.toString().split(' ')[2] + ' ' + date.toString().split(' ')[1];
               return (
-                <Link key={i} to={`/repository/${i}`}>
+                <Link key={rep.id} to={`/repository/${rep.id}`}>
                   <div className={styles.repCard} onClick={() => localStorage.removeItem('topic')}>
                     <Card
                       image={rep.owner.avatar_url}
@@ -120,8 +119,8 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
                   </div>
                 </Link>
               );
-            })}
-          </PaginatedItems>
+            }}
+          />
         </div>
       )}
       {!error && reps.length === 0 && (

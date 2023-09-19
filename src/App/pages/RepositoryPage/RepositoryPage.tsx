@@ -23,7 +23,7 @@ const RepositoryPage: React.FC<Props> = ({ reps }) => {
 
   let index = Number(id);
 
-  let currentRepo = reps[index];
+  let currentRepo = reps.filter((rep) => rep.id === index)[0];
 
   useEffect(() => {
     getData(currentRepo.contributors_url, setContributors);
