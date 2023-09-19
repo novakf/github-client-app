@@ -4,12 +4,12 @@ import { Link, useParams } from 'react-router-dom';
 import Text from 'components/Text';
 import LinkIcon from 'icons/LinkIcon';
 import { ContributorType, RepositoryType } from 'App/types';
-import Languages from 'App/pages/RepositoryPage/components/Languages';
-import Readme from 'App/pages/RepositoryPage/components/Readme';
+import Languages from './components/Languages';
+import Readme from './components/Readme';
 import { getData } from 'App/model';
-import Topics from 'App/pages/RepositoryPage/components/Topics';
-import Stats from 'App/pages/RepositoryPage/components/Stats';
-import Contributors from 'App/pages/RepositoryPage/components/Contributors';
+import Topics from './components/Topics';
+import Stats from './components/Stats';
+import Contributors from './components/Contributors';
 import styles from './RepositoryPage.module.scss';
 
 type Props = {

@@ -1,0 +1,41 @@
+:root {
+  --border-radius: 0;
+  --brand: #1f883d;
+  --brand-hover: #86aaa7;
+  --brand-active: #487773;
+
+  --text-secondary: #afadb5;
+  --text-primary: #000000;
+  --text-accent: #518581;
+  --maxline-count: 0;
+
+  --button-primary-bg: #1f883d;
+  --button-primary-bg-active: #3dad6f;
+  --button-primary-bg-disabled: #d9d9d9;
+  --button-primary-bg-hover: #257539;
+  --button-primary-text: #ffffff;
+  --button-border-radius: 6px;
+  --space-xxs: 8px;
+  --space-s: 14px;
+  --space-l: 20px;
+  --space-xl: 24px;
+  --space-m: 16px;
+  --space-xs: 12px;
+
+  --checkbox-border-hover: #518581;
+  --checkbox-bg: #fff;
+  --checkbox-bg-disabled: #ffffff80;
+  --checkbox-bg: #ffffff;
+  --checkbox-check-hover: #518581;
+  --checkbox-check-disabled: #00000033;
+  --checkbox-check: #518581;
+
+  --card-bg: #fff;
+
+  --input-placeholder: #afadb5;
+  --input-border: #fff;
+  --input-bg: #fff;
+  --input-bg-focus: #fff;
+
+  --star-accent: #ff9432;
+}

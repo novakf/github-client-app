@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Header from 'components/Header';
 import MainPage from './pages/MainPage';
-import RepositoryPage from 'App/pages/RepositoryPage';
+import RepositoryPage from './pages/RepositoryPage';
 import './App.css';
 
 const App: React.FC = () => {

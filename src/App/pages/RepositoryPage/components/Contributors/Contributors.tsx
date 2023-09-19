@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContributorType } from 'App/types';
 import CircleIcon from 'icons/CircleIcon';
-import Contributor from 'App/pages/RepositoryPage/components/Contributor';
+import Contributor from '../Contributor';
 import styles from './Contributors.module.scss';
 
 type Props = {

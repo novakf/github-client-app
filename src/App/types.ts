@@ -72,13 +72,7 @@ export type RepositoryType = {
   archived?: boolean;
   disabled?: boolean;
   open_issues_count?: number;
-  license?: {
-    key?: string | undefined;
-    name?: string | undefined;
-    spdx_id?: string | undefined;
-    url?: string | undefined;
-    node_id?: string | undefined;
-  } | null;
+  license?: LicenceType | null;
   allow_forking?: boolean;
   is_template?: boolean;
   web_commit_signoff_required?: boolean;
@@ -89,6 +83,14 @@ export type RepositoryType = {
   watchers?: number;
   default_branch?: string;
   permissions?: PermissionsType;
+};
+
+export type LicenceType = {
+  key?: string;
+  name?: string;
+  spdx_id?: string;
+  url?: string;
+  node_id?: string;
 };
 
 export type OwnerType = {
@@ -176,3 +178,14 @@ export type ProfileType = {
   created_at: string;
   updated_at: string;
 };
+
+export enum LanguageColors {
+  JavaScript = '#F1E05A',
+  TypeScript = '#3178C6',
+  HTML = '#E34C26',
+  CSS = '#563D7C',
+  SCSS = '#C6538C',
+  Python = '#3572A5',
+  JupiterNotebook = '#DA5B0B',
+  default = '#D9D9D9',
+}

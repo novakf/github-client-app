@@ -1,6 +1,8 @@
+@import "../../../../../constants.css";
+
 .item {
   align-items: center;
-  color: #000;
+  color: var(--text-primary);
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -10,7 +12,7 @@
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 22px; /* 122.222% */
+  line-height: 22px;
   & > a {
     width: 40px;
     text-align: center;
@@ -19,18 +21,18 @@
 
 .icon {
   path {
-    stroke: #000;
+    stroke: var(--text-primary);
   }
   &:active {
     path {
-      stroke: #1f883d;
+      stroke: var(--brand);
     }
   }
 }
 
 .active {
   color: #fff;
-  background: #1f883d;
+  background: var(--brand);
 }
 
 .pagination {

@@ -1,21 +1,21 @@
-@import "../constants.css";
+@import "../../constants.css";
 
 button {
-  color: var(--button-primary-text, #fff);
+  color: var(--button-primary-text);
   font-family: Roboto;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: 18px;
   display: inline-flex;
-  padding: var(--space-s, 14px) var(--space-l, 20px);
+  padding: var(--space-s) var(--space-l);
   justify-content: center;
   align-items: center;
   min-height: 52px;
   gap: 10px;
-  border-radius: var(--border-radius, 0px);
+  border-radius: var(--border-radius);
   border: none;
-  background: var(--button-primary-bg, #518581);
+  background: var(--button-primary-bg);
 
   &:hover {
     background: var(--button-primary-bg-hover);
@@ -38,9 +38,7 @@ button {
 
 .loader {
   margin: 0;
-  //border-top-color: var(--button-primary-text);
-  //border-left-color: var(--button-primary-text);
-  //border-bottom-color: var(--button-primary-text);
+
   path {
     fill: var(--button-primary-text);
   }
