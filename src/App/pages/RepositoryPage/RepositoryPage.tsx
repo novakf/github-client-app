@@ -1,33 +1,35 @@
 import ArrowLeftIcon from 'icons/ArrowLeftIcon';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Text from 'components/Text';
 import LinkIcon from 'icons/LinkIcon';
-import { ContributorType } from 'App/types';
 import Languages from './components/Languages';
 import Readme from './components/Readme';
-import { getData } from 'App/model';
 import Topics from './components/Topics';
 import Stats from './components/Stats';
 import Contributors from './components/Contributors';
 import styles from './RepositoryPage.module.scss';
 import GitHubStore from 'store/GitHubStore';
 import { observer, useLocalObservable } from 'mobx-react-lite';
+import RepoStore from 'store/RepoStore';
 
 const RepositoryPage: React.FC = () => {
   const gitHubStore = useLocalObservable(() => new GitHubStore());
-  const [contributors, setContributors] = useState<ContributorType[]>([]);
+  let currentRepo = gitHubStore.list.filter((rep) => rep.id === Number(useParams().id))[0];
+  let readmeUrl = `/repos/${currentRepo.owner.login}/${currentRepo.name}/readme`;
+  const repoStore = useLocalObservable(
+    () => new RepoStore(currentRepo.contributors_url, currentRepo.languages_url, readmeUrl),
+  );
 
-  let repos = gitHubStore.list;
-
-  let id = useParams().id;
-  let index = Number(id);
-
-  let currentRepo = repos.filter((rep) => rep.id === index)[0];
+  const contributorsStore = repoStore.contributorsStore;
+  const languagesStore = repoStore.languagesStore;
+  const readmeStore = repoStore.readmeStore;
 
   useEffect(() => {
-    getData(currentRepo.contributors_url, setContributors);
-  }, []);
+    contributorsStore.getContributors();
+    languagesStore.getLanguages();
+    readmeStore.getReadme();
+  }, [contributorsStore, languagesStore, readmeStore]);
 
   return currentRepo ? (
     <div className={styles.repContainer}>
@@ -52,11 +54,11 @@ const RepositoryPage: React.FC = () => {
         <Topics currentRepo={currentRepo} />
         <Stats currentRepo={currentRepo} />
         <div className={styles.contributors_languages}>
-          <Contributors contributors={contributors} />
-          <Languages languages_url={currentRepo.languages_url} />
+          <Contributors contributors={contributorsStore.list} />
+          <Languages languages={languagesStore.list} />
         </div>
       </div>
-      <Readme repo={currentRepo} />
+      <Readme file={readmeStore.file} />
     </div>
   ) : (
     <div>Repository not found</div>

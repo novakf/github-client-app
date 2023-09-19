@@ -1,22 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './Languages.module.scss';
 import CircleIcon from 'icons/CircleIcon';
 import { Map } from 'App/types';
-import { getData } from 'App/model';
 import { LanguageColors } from 'App/types';
 
 type Props = {
-  languages_url: string;
+  languages: Map;
 };
 
-const Languages: React.FC<Props> = ({ languages_url }) => {
-  const [languages, setLanguages] = useState<Map>();
-
-  useEffect(() => {
-    getData(languages_url, setLanguages);
-  }, []);
-
-  let sum = 0;
+const Languages: React.FC<Props> = ({ languages }) => {
+  let sum: number = 0;
   if (languages) sum = Object.values(languages).reduce((acc, curr) => acc + curr, 0);
 
   const colorPicker = (language: string) => {
