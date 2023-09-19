@@ -96,3 +96,8 @@
     fill: var(--star-accent);
   }
 }
+
+.listLoader {
+  display: flex;
+  justify-content: center;
+}

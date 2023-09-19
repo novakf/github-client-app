@@ -5,45 +5,36 @@ import Button from 'components/Button';
 import SearchIcon from 'icons/SearchIcon';
 import Card from 'components/Card';
 import { Link } from 'react-router-dom';
-import { RepositoryType } from 'App/types';
-import { getReps } from 'App/model';
 import styles from './MainPage.module.scss';
 import StarIcon from 'icons/StarIcon';
 import InfiniteScroll from './components/InfiniteScroll';
+import GitHubStore from 'store/GitHubStore/';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import { Meta } from 'store/GitHubStore/types';
+import Loader from 'components/Loader';
 
-type Props = {
-  reps: RepositoryType[];
-  setReps: (value: RepositoryType[]) => void;
-};
+const MainPage: React.FC = () => {
+  const gitHubStore = useLocalObservable(() => new GitHubStore());
 
-const MainPage: React.FC<Props> = ({ reps, setReps }) => {
   let storedTopic = localStorage.getItem('topic');
   let repsOwner = '';
-  if (reps[0]) repsOwner = reps[0].owner.login;
+  if (gitHubStore.list[0]) repsOwner = gitHubStore.list[0].owner.login;
 
   const [topic, setTopic] = useState<string>(storedTopic ? storedTopic : '');
   const [debouncedTopic, setDebouncedTopic] = React.useState(storedTopic);
   const [inputValue, setInputValue] = useState<string>(repsOwner);
-  const [org, setOrg] = useState<string>(repsOwner);
-  const [error, setError] = useState<string>('');
 
   useEffect(() => {
+    localStorage.setItem('topic', topic);
     const timeout = setTimeout(() => {
       setDebouncedTopic(topic);
     }, 1000);
     return () => clearTimeout(timeout);
   }, [topic]);
 
-  useEffect(() => {
-    org !== '' && getReps(org, setReps, setError);
-  }, [org]);
+  if (gitHubStore.list.length !== 0) localStorage.setItem('reps', JSON.stringify(gitHubStore.list));
 
-  useEffect(() => {
-    localStorage.setItem('topic', topic);
-  }, [topic]);
-
-  if (reps.length !== 0) localStorage.setItem('reps', JSON.stringify(reps));
-  if (error) localStorage.removeItem('reps');
+  if (gitHubStore.meta === Meta.error) localStorage.removeItem('reps');
 
   const topicTarget = (target?: string[]) => {
     if (!target || !debouncedTopic) return true;
@@ -54,8 +45,9 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
   const handleOrgEnter = (event: React.KeyboardEvent) => {
     let value = (event.target as HTMLInputElement).value;
     if (event.key === 'Enter') {
+      localStorage.removeItem('reps');
       setInputValue(value);
-      setOrg(value);
+      gitHubStore.getRepos(value);
     }
   };
 
@@ -83,18 +75,19 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
           className={styles.button}
           onClick={() => {
             localStorage.removeItem('reps');
-            setOrg(inputValue);
+            gitHubStore.getRepos(inputValue);
           }}
         >
           <SearchIcon />
         </Button>
       </div>
-      {!error && reps.length !== 0 && (
+
+      {gitHubStore.meta === Meta.success && gitHubStore.list.length !== 0 && (
         <div className={styles.repsList}>
           <InfiniteScroll
             repsOwner={repsOwner}
             itemsPerPage={6}
-            reps={reps.filter((rep) => topicTarget(rep.topics))}
+            reps={gitHubStore.list.filter((rep) => topicTarget(rep.topics))}
             renderRep={(rep) => {
               let date = new Date();
               if (rep.updated_at) date = new Date(rep.updated_at);
@@ -123,12 +116,17 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
           />
         </div>
       )}
-      {!error && reps.length === 0 && (
+      {gitHubStore.meta === Meta.loading && (
+        <div className={styles.listLoader}>
+          <Loader />
+        </div>
+      )}
+      {gitHubStore.meta === Meta.error && gitHubStore.list[0]?.owner.login && (
         <Text view="p-16" className={styles.notfoundText}>
           Repositories not found!
         </Text>
       )}
-      {error && (
+      {gitHubStore.meta === Meta.error && !gitHubStore.list[0]?.owner.login && (
         <Text view="p-16" className={styles.notfoundText}>
           Organization not found!
         </Text>
@@ -137,4 +135,4 @@ const MainPage: React.FC<Props> = ({ reps, setReps }) => {
   );
 };
 
-export default MainPage;
+export default observer(MainPage);

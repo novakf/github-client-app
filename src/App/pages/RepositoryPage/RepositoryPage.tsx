@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Text from 'components/Text';
 import LinkIcon from 'icons/LinkIcon';
-import { ContributorType, RepositoryType } from 'App/types';
+import { ContributorType } from 'App/types';
 import Languages from './components/Languages';
 import Readme from './components/Readme';
 import { getData } from 'App/model';
@@ -11,19 +11,19 @@ import Topics from './components/Topics';
 import Stats from './components/Stats';
 import Contributors from './components/Contributors';
 import styles from './RepositoryPage.module.scss';
+import GitHubStore from 'store/GitHubStore';
+import { observer, useLocalObservable } from 'mobx-react-lite';
 
-type Props = {
-  reps: RepositoryType[];
-};
-
-const RepositoryPage: React.FC<Props> = ({ reps }) => {
+const RepositoryPage: React.FC = () => {
+  const gitHubStore = useLocalObservable(() => new GitHubStore());
   const [contributors, setContributors] = useState<ContributorType[]>([]);
 
-  let id = useParams().id;
+  let repos = gitHubStore.list;
 
+  let id = useParams().id;
   let index = Number(id);
 
-  let currentRepo = reps.filter((rep) => rep.id === index)[0];
+  let currentRepo = repos.filter((rep) => rep.id === index)[0];
 
   useEffect(() => {
     getData(currentRepo.contributors_url, setContributors);
@@ -63,4 +63,4 @@ const RepositoryPage: React.FC<Props> = ({ reps }) => {
   );
 };
 
-export default RepositoryPage;
+export default observer(RepositoryPage);
