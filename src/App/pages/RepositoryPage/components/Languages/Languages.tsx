@@ -1,33 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './Languages.module.scss';
 import CircleIcon from 'icons/CircleIcon';
 import { Map } from 'App/types';
-import { getData } from 'App/model';
+import { LanguageColors } from 'App/types';
 
 type Props = {
-  languages_url: string;
+  languages: Map;
 };
 
-const Languages: React.FC<Props> = ({ languages_url }) => {
-  const [languages, setLanguages] = useState<Map>();
-
-  useEffect(() => {
-    getData(languages_url, setLanguages);
-  }, []);
-
-  let sum = 0;
+const Languages: React.FC<Props> = ({ languages }) => {
+  let sum: number = 0;
   if (languages) sum = Object.values(languages).reduce((acc, curr) => acc + curr, 0);
 
   const colorPicker = (language: string) => {
     let color = '';
-    if (language === 'JavaScript') color = '#F1E05A';
-    if (language === 'TypeScript') color = '#3178C6';
-    if (language === 'HTML') color = '#E34C26';
-    if (language === 'CSS') color = '#563D7C';
-    if (language === 'SCSS') color = '#C6538C';
-    if (language === 'Python') color = '#3572A5';
-    if (language === 'Jupiter Notebook') color = '#DA5B0B';
-    if (!color) color = '#D9D9D9';
+    if (language === 'JavaScript') color = LanguageColors.JavaScript;
+    if (language === 'TypeScript') color = LanguageColors.TypeScript;
+    if (language === 'HTML') color = LanguageColors.HTML;
+    if (language === 'CSS') color = LanguageColors.CSS;
+    if (language === 'SCSS') color = LanguageColors.SCSS;
+    if (language === 'Python') color = LanguageColors.Python;
+    if (language === 'Jupiter Notebook') color = LanguageColors.JupiterNotebook;
+    if (!color) color = LanguageColors.default;
 
     return color;
   };

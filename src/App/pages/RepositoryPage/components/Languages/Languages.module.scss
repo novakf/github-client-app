@@ -1,3 +1,5 @@
+@import "../../../../../constants.css";
+
 .languagesContainer {
   display: flex;
   flex-direction: column;
@@ -21,12 +23,12 @@
 }
 
 .title {
-  color: #000;
+  color: var(--text-primary);
   font-family: Roboto;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
-  line-height: 22px; /* 122.222% */
+  line-height: 22px;
 }
 
 .languages {
@@ -47,16 +49,16 @@
 }
 
 .language {
-  color: #000;
+  color: var(--text-primary);
   font-family: Roboto;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 18px; /* 128.571% */
+  line-height: 18px;
 }
 
 .percent {
-  color: #afadb5;
+  color: var(--text-secondary);
   font-family: Roboto;
   font-size: 14px;
   font-style: normal;

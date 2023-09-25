@@ -1,14 +1,14 @@
-@import "../constants.css";
+@import "../../constants.css";
 
 .card {
   display: inline-flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-xl, 24px);
-  border-radius: var(--border-radius, 0px);
-  background: var(--card-bg, #fff);
+  gap: var(--space-xl);
+  border-radius: var(--border-radius);
+  background: var(--card-bg);
   width: 100%;
-  height: 560px;
+  height: 506px;
 
   &:hover {
     /* shadow */
@@ -17,7 +17,7 @@
   }
 
   img {
-    border-radius: var(--border-radius, 0px);
+    border-radius: var(--border-radius);
     background: #d9d9d9;
     width: 100%;
     height: auto;
@@ -26,11 +26,21 @@
 
 .content {
   display: flex;
-  padding: 0px var(--space-xs, 12px);
+
   flex-direction: column;
   align-items: flex-start;
-  gap: var(--space-l, 20px);
+  gap: var(--space-l);
   width: 100%;
+}
+
+.text-content {
+  padding: 0px var(--space-xs);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--space-xxs);
+  align-self: stretch;
 }
 
 .caption {
@@ -39,54 +49,53 @@
   -webkit-line-clamp: 1;
   flex: 1 0 0;
   overflow: hidden;
-  color: var(--text-secondary, #afadb5);
+  color: var(--text-secondary);
   text-overflow: ellipsis;
   font-family: Roboto;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 18px; /* 128.571% */
-  padding-bottom: 8px;
+  line-height: 18px;
+  margin: 0;
 }
 
 .card-title {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  flex: 1 0 0;
   overflow: hidden;
-  color: var(--text-primary, #000);
+  color: #000;
   text-overflow: ellipsis;
   font-family: Roboto;
   font-size: 20px;
   font-style: normal;
   font-weight: 500;
-  line-height: 24px; /* 120% */
-  padding: 0 0 8px 0;
+  line-height: 24px;
+  margin: 0;
 }
 
 .card-subtitle {
+  margin: 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3;
-  flex: 1 0 0;
   overflow: hidden;
-  color: var(--text-secondary, #afadb5);
+  color: var(--text-secondary);
   text-overflow: ellipsis;
   font-family: Roboto;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
-  line-height: 20px; /* 125% */
+  line-height: 20px;
 }
 
 .action-content {
-  color: var(--text-primary, #000);
+  color: var(--text-primary);
   font-family: Roboto;
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
-  line-height: 22px; /* 122.222% */
+  line-height: 22px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -97,6 +106,6 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  gap: var(--space-xxs, 8px);
+  gap: var(--space-xxs);
   align-self: stretch;
 }

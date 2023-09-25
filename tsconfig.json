@@ -25,7 +25,8 @@
       "styles": ["styles/*"],
       "utils": ["utils/*"],
       "App": ["App/*"],
-      "icons": ["icons/*"]
+      "icons": ["icons/*"],
+      "store": ["store/*"]
     }
   },
   "include": ["src"],

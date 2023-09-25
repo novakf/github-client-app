@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styles from './Contributor.module.scss';
-import { ContributorType, ProfileType } from 'App/types';
-import { getData } from 'App/model';
+import { ContributorType } from 'App/types';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import ProfileStore from 'store/RepoStore/ProfileStore';
 
 type Props = {
   contributor: ContributorType;
 };
 
 const Contributor: React.FC<Props> = ({ contributor }) => {
-  const [data, setData] = useState<ProfileType>();
+  const profileStore = useLocalObservable(() => new ProfileStore(contributor.url));
 
   useEffect(() => {
-    getData(contributor.url, setData);
-  }, []);
+    profileStore.getProfile();
+  }, [profileStore]);
 
   return (
     <div className={styles.contributor}>
       <img className={styles.logo} src={contributor.avatar_url} alt="contrib" />
       <div className={styles.login}>{contributor.login}</div>
-      <div className={styles.name}>{data?.name}</div>
+      <div className={styles.name}>{profileStore.info?.name}</div>
     </div>
   );
 };
 
-export default Contributor;
+export default observer(Contributor);

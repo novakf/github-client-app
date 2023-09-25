@@ -1,7 +1,7 @@
 import React from 'react';
 import { ContributorType } from 'App/types';
 import CircleIcon from 'icons/CircleIcon';
-import Contributor from 'App/pages/RepositoryPage/components/Contributor';
+import Contributor from '../Contributor';
 import styles from './Contributors.module.scss';
 
 type Props = {
@@ -16,8 +16,8 @@ const Contributors: React.FC<Props> = ({ contributors }) => {
         <CircleIcon fill="#D9D9D9" />
         <div className={styles.contributorsNumber}>{contributors.length}</div>
       </div>
-      {contributors.map((contributor, i) => {
-        return <Contributor key={i} contributor={contributor} />;
+      {contributors.map((contributor) => {
+        return <Contributor key={contributor.id} contributor={contributor} />;
       })}
     </div>
   );

@@ -1,4 +1,4 @@
-@import "../constants.css";
+@import "../../constants.css";
 
 input {
   font-size: 16px;
@@ -6,7 +6,7 @@ input {
   width: 100%;
   height: 52px;
   align-items: center;
-  gap: var(--space-xxs, 8px);
+  gap: var(--space-xxs);
   flex-shrink: 0;
   border: none;
   background: transparent;
@@ -21,19 +21,19 @@ input {
   display: flex;
   width: 100%;
   height: 52px;
-  padding: 0 var(--space-xs, 12px);
+  padding: 0 var(--space-xs);
   align-items: center;
-  gap: var(--space-xxs, 8px);
+  gap: var(--space-xxs);
   flex-shrink: 0;
-  border-radius: var(--border-radius, 0px);
-  border: 1px solid var(--input-border, #fff);
-  background: var(--input-bg, #fff);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--input-border);
+  background: var(--input-bg);
 
   &:not(:has(input:disabled)) {
     &:hover,
     &:focus {
-      border-radius: var(--border-radius, 0px);
-      border: 1px solid var(--input-border-focus, #518581);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--brand);
       background: var(--input-bg-focus, #fff);
       outline: none;
     }

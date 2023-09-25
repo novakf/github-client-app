@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { RepositoryType } from 'App/types';
-import { getReadme } from 'App/model';
+import React from 'react';
 import styles from './Readme.module.scss';
 
 type Props = {
-  repo: RepositoryType;
+  file: string;
 };
 
-const Readme: React.FC<Props> = ({ repo }) => {
-  const [file, setFile] = useState<string>('');
-
-  useEffect(() => {
-    getReadme(repo.owner.login, repo.name, setFile);
-  }, []);
-
+const Readme: React.FC<Props> = ({ file }) => {
   let fileWithoutSvgLink = file.replace(/<svg.*<\/svg>/g, '');
 
   return (
