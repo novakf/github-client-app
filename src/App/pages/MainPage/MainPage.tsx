@@ -7,7 +7,6 @@ import Card from 'components/Card';
 import { Link, useParams } from 'react-router-dom';
 import styles from './MainPage.module.scss';
 import StarIcon from 'icons/StarIcon';
-import InfiniteScroll from './components/InfiniteScroll';
 import GitHubStore from 'store/GitHubStore/';
 import { observer } from 'mobx-react-lite';
 import { Meta } from 'store/types';
@@ -24,11 +23,26 @@ const MainPage: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>(repsOwner);
 
   useEffect(() => {
-    gitHubStore.getRepos(repsOwner);
-  }, [repsOwner]);
+    const handleScroll = () => {
+      if (
+        window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight ||
+        debouncedTopic
+      )
+        return;
+      gitHubStore.incrementPage();
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [debouncedTopic]);
+
+  useEffect(() => {
+    if (!debouncedTopic) gitHubStore.getRepos(repsOwner, 6);
+    else gitHubStore.getRepos(repsOwner);
+  }, [gitHubStore.page, debouncedTopic]);
 
   useEffect(() => {
     localStorage.setItem('topic', topic);
+    gitHubStore.resetStore();
     const timeout = setTimeout(() => {
       setDebouncedTopic(topic);
     }, 1000);
@@ -81,13 +95,11 @@ const MainPage: React.FC = () => {
         </Button>
       </div>
 
-      {gitHubStore.meta === Meta.success && gitHubStore.list.length !== 0 && (
+      {gitHubStore.list.length !== 0 && (
         <div className={styles.repsList}>
-          <InfiniteScroll
-            repsOwner={repsOwner}
-            itemsPerPage={6}
-            reps={gitHubStore.list.filter((rep) => topicTarget(rep.topics))}
-            renderRep={(rep) => {
+          {gitHubStore.list
+            .filter((rep) => topicTarget(rep.topics))
+            .map((rep) => {
               let date = new Date();
               if (rep.updated_at) date = new Date(rep.updated_at);
               let splicedDate = 'Updated ' + date.toString().split(' ')[2] + ' ' + date.toString().split(' ')[1];
@@ -111,8 +123,7 @@ const MainPage: React.FC = () => {
                   </div>
                 </Link>
               );
-            }}
-          />
+            })}
         </div>
       )}
       {gitHubStore.meta === Meta.loading && (
