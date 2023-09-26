@@ -63,7 +63,7 @@ export default class ReadmeStore {
           this._meta = Meta.success;
           return;
         })
-        .catch((e) => {
+        .catch(() => {
           this._meta = Meta.error;
         });
     }

@@ -16,7 +16,7 @@ export const gitHubStore = new GitHubStore();
 
 const MainPage: React.FC = () => {
   let storedTopic = localStorage.getItem('topic');
-  let repsOwner = useParams().owner as string;
+  let repsOwner = useParams().owner ? (useParams().owner as string) : '';
 
   const [topic, setTopic] = useState<string>(storedTopic ? storedTopic : '');
   const [debouncedTopic, setDebouncedTopic] = React.useState(storedTopic);
