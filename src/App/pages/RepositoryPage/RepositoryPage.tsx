@@ -9,59 +9,67 @@ import Topics from './components/Topics';
 import Stats from './components/Stats';
 import Contributors from './components/Contributors';
 import styles from './RepositoryPage.module.scss';
-import GitHubStore from 'store/GitHubStore';
 import { observer, useLocalObservable } from 'mobx-react-lite';
 import RepoStore from 'store/RepoStore';
+import { gitHubStore } from '../MainPage/MainPage';
+import ContributorsStore from 'store/RepoStore/ContributorsStore';
+import ReadmeStore from 'store/RepoStore/ReadmeStore';
+import LanguagesStore from 'store/RepoStore/LanguagesStore';
 
 const RepositoryPage: React.FC = () => {
-  const gitHubStore = useLocalObservable(() => new GitHubStore());
-  let currentRepo = gitHubStore.list.filter((rep) => rep.id === Number(useParams().id))[0];
-  let readmeUrl = `/repos/${currentRepo.owner.login}/${currentRepo.name}/readme`;
-  const repoStore = useLocalObservable(
-    () => new RepoStore(currentRepo.contributors_url, currentRepo.languages_url, readmeUrl),
-  );
-
-  const contributorsStore = repoStore.contributorsStore;
-  const languagesStore = repoStore.languagesStore;
-  const readmeStore = repoStore.readmeStore;
+  const { owner, repoName } = useParams();
+  const repoStore = useLocalObservable(() => new RepoStore());
+  let currentRepo = gitHubStore.list.filter((rep) => rep.name === useParams().repoName)[0];
 
   useEffect(() => {
-    contributorsStore.getContributors();
-    languagesStore.getLanguages();
-    readmeStore.getReadme();
-  }, [contributorsStore, languagesStore, readmeStore]);
+    owner && repoName && repoStore.getRepo(owner, repoName);
+  }, [repoStore]);
 
-  return currentRepo ? (
-    <div className={styles.repContainer}>
-      <div className={styles.titleContainer}>
-        <Link to={'/'}>
-          <ArrowLeftIcon />
-        </Link>
-        <img className={styles.logo} src={currentRepo.owner.avatar_url} alt="avatar" />
-        <Text className={styles.title} view="title">
-          {currentRepo.name}
-        </Text>
-      </div>
-      <div className={styles.repoInfo}>
-        {currentRepo.homepage && (
-          <a href={currentRepo.homepage} target="_blank" style={{ textDecoration: 'none' }}>
-            <Text view="p-16" weight="bold" className={styles.link}>
-              <LinkIcon className={styles.linkIcon} />
-              {currentRepo.homepage.split('').splice(8, currentRepo.homepage.length).join('')}
-            </Text>
-          </a>
-        )}
-        <Topics currentRepo={currentRepo} />
-        <Stats currentRepo={currentRepo} />
-        <div className={styles.contributors_languages}>
-          <Contributors contributors={contributorsStore.list} />
-          <Languages languages={languagesStore.list} />
+  if (!currentRepo) currentRepo = repoStore.repo;
+
+  const contributorsStore = useLocalObservable(() => new ContributorsStore());
+  const languagesStore = useLocalObservable(() => new LanguagesStore());
+  const readmeStore = useLocalObservable(() => new ReadmeStore());
+
+  useEffect(() => {
+    if (currentRepo.id) {
+      contributorsStore.getContributors(currentRepo.contributors_url);
+      languagesStore.getLanguages(currentRepo.languages_url);
+      readmeStore.getReadme(`/repos/${owner}/${repoName}/readme`);
+    }
+  }, [currentRepo, contributorsStore, languagesStore, readmeStore]);
+
+  return (
+    currentRepo.id && (
+      <div className={styles.repContainer}>
+        <div className={styles.titleContainer}>
+          <Link to={`/${owner}`}>
+            <ArrowLeftIcon />
+          </Link>
+          <img className={styles.logo} src={currentRepo.owner.avatar_url} alt="avatar" />
+          <Text className={styles.title} view="title">
+            {currentRepo.name}
+          </Text>
         </div>
+        <div className={styles.repoInfo}>
+          {currentRepo.homepage && (
+            <a href={currentRepo.homepage} target="_blank" style={{ textDecoration: 'none' }}>
+              <Text view="p-16" weight="bold" className={styles.link}>
+                <LinkIcon className={styles.linkIcon} />
+                {currentRepo.homepage.split('').splice(8, currentRepo.homepage.length).join('')}
+              </Text>
+            </a>
+          )}
+          <Topics currentRepo={currentRepo} />
+          <Stats currentRepo={currentRepo} />
+          <div className={styles.contributors_languages}>
+            <Contributors contributors={contributorsStore.list} />
+            <Languages languages={languagesStore.list} />
+          </div>
+        </div>
+        <Readme file={readmeStore.file} />
       </div>
-      <Readme file={readmeStore.file} />
-    </div>
-  ) : (
-    <div>Repository not found</div>
+    )
   );
 };
 

@@ -12,7 +12,7 @@ const Topics: React.FC<Props> = ({ currentRepo }) => {
     <div className={styles.topics}>
       {currentRepo.topics?.map((topic, i) => {
         return (
-          <Link key={i} to={'/'} style={{ textDecoration: 'none' }}>
+          <Link key={i} to={`/${currentRepo.owner.login}`} style={{ textDecoration: 'none' }}>
             <div className={styles.topic} onClick={() => localStorage.setItem('topic', topic)}>
               {topic}
             </div>

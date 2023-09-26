@@ -10,11 +10,8 @@ const App: React.FC = () => {
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/repository">
-          <Route path=":id" element={<RepositoryPage />} />
-        </Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/:owner?" element={<MainPage />} />
+        <Route path="/:owner/:repoName" element={<RepositoryPage />} />
       </Routes>
     </BrowserRouter>
   );

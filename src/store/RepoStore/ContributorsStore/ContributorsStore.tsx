@@ -3,23 +3,24 @@ import { observable, computed, makeObservable, action, runInAction } from 'mobx'
 import { GITHUB_API_TOKEN } from 'App/constants';
 import { Octokit } from 'octokit';
 import axios from 'axios';
+import { Meta } from '../../types';
 
 const octokit = new Octokit({
   auth: GITHUB_API_TOKEN,
 });
 
-type PrivateFields = '_list';
+type PrivateFields = '_list' | '_meta';
 
 export default class ContributorsStore {
   private _list: ContributorType[] = [];
-  _url: string = '';
+  private _meta: Meta = Meta.initial;
 
-  constructor(url: string) {
-    this._url = url;
-
+  constructor() {
     makeObservable<ContributorsStore, PrivateFields>(this, {
       _list: observable.ref,
+      _meta: observable,
       list: computed,
+      meta: computed,
       getContributors: action,
     });
   }
@@ -28,18 +29,25 @@ export default class ContributorsStore {
     return this._list;
   }
 
-  async getContributors() {
+  get meta(): Meta {
+    return this._meta;
+  }
+
+  async getContributors(contributorsUrl: string) {
+    this._meta = Meta.loading;
     this._list = [];
 
     if (GITHUB_API_TOKEN) {
       const result = await octokit.request('GET {url}', {
-        url: this._url,
+        url: contributorsUrl,
       });
       runInAction(() => {
+        this._meta = Meta.success;
         this._list = result.data;
       });
     } else {
-      await axios.get(this._url).then((res) => {
+      await axios.get(contributorsUrl).then((res) => {
+        this._meta = Meta.success;
         this._list = res.data;
       });
     }

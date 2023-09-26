@@ -1,5 +1,5 @@
 import { RepositoryType } from 'App/types';
-import { Meta } from './types';
+import { Meta } from '../types';
 import { observable, computed, makeObservable, action, runInAction } from 'mobx';
 import { GITHUB_API_TOKEN } from 'App/constants';
 
@@ -15,11 +15,9 @@ const BASE_URL = 'https://api.github.com';
 type PrivateFields = '_list' | '_meta';
 
 export default class GitHubStore {
-  private _list: RepositoryType[] = localStorage.getItem('reps')
-    ? JSON.parse(localStorage.getItem('reps') as string)
-    : [];
+  private _list: RepositoryType[] = [];
 
-  private _meta: Meta = this._list.length === 0 ? Meta.initial : Meta.success;
+  private _meta: Meta = Meta.initial;
 
   constructor() {
     makeObservable<GitHubStore, PrivateFields>(this, {
@@ -41,9 +39,6 @@ export default class GitHubStore {
 
   async getRepos(org: string) {
     this._meta = Meta.loading;
-    this._list = [];
-
-    console.log(org);
 
     if (GITHUB_API_TOKEN)
       try {

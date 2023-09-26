@@ -12,11 +12,8 @@ type PrivateFields = '_list';
 
 export default class LanguagesStore {
   private _list: Map = {};
-  _url: string = '';
 
-  constructor(url: string) {
-    this._url = url;
-
+  constructor() {
     makeObservable<LanguagesStore, PrivateFields>(this, {
       _list: observable.ref,
       list: computed,
@@ -28,18 +25,18 @@ export default class LanguagesStore {
     return this._list;
   }
 
-  async getLanguages() {
+  async getLanguages(url: string) {
     this._list = {};
 
     if (GITHUB_API_TOKEN) {
       const result = await octokit.request('GET {url}', {
-        url: this._url,
+        url: url,
       });
       runInAction(() => {
         this._list = result.data;
       });
     } else {
-      await axios.get(this._url).then((res) => {
+      await axios.get(url).then((res) => {
         this._list = res.data;
       });
     }
