@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development npx webpack serve --mode=development",
-    "build": "cross-env NODE_ENV=production npx webpack --mode=production",
+    "build": "NODE_ENV=production npx webpack --mode=production",
     "preview": "vite preview",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix"
@@ -65,5 +65,8 @@
     "webpack": "^5.88.2",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^4.15.1"
-  }
+  },
+  "browserslist": [
+    "IE 11"
+  ]
 }

@@ -5,6 +5,7 @@ import { GITHUB_API_TOKEN } from 'App/constants';
 
 import { Octokit } from 'octokit';
 import axios from 'axios';
+import { contains } from 'utils/index';
 
 const octokit = new Octokit({
   auth: GITHUB_API_TOKEN,
@@ -18,6 +19,7 @@ export default class GitHubStore {
   private _list: RepositoryType[] = [];
   private _meta: Meta = Meta.initial;
   private _page: number = 1;
+  private _end: boolean = false;
 
   constructor() {
     makeObservable<GitHubStore, PrivateFields>(this, {
@@ -55,25 +57,29 @@ export default class GitHubStore {
   }
 
   async getRepos(org: string, limit?: number) {
+    if (this._end) return;
+
     this._meta = Meta.loading;
 
     if (GITHUB_API_TOKEN)
       try {
         const result = await octokit.request('GET /orgs/{org}/repos', {
           org: org,
-          per_page: limit,
+          per_page: limit ? limit : 100,
           page: this._page,
         });
         runInAction(() => {
           this._meta = Meta.success;
+          if (result.data.length === 0) {
+            this._end = true;
+          }
 
           if (!limit) {
             this._list = result.data;
             return;
           }
 
-          if (this._list.length > 0 && this._list[this._list.length - 1].id === result.data[result.data.length - 1].id)
-            return;
+          if (contains(this._list, result.data)) return;
           else this._list = [...this._list, ...result.data];
         });
       } catch (e) {

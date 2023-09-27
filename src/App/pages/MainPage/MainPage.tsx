@@ -14,6 +14,8 @@ import Loader from 'components/Loader';
 
 export const gitHubStore = new GitHubStore();
 
+const ONE_PAGE_LIMIT = 6;
+
 const MainPage: React.FC = () => {
   let storedTopic = localStorage.getItem('topic');
   let repsOwner = useParams().owner ? (useParams().owner as string) : '';
@@ -24,11 +26,7 @@ const MainPage: React.FC = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (
-        window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight ||
-        debouncedTopic
-      )
-        return;
+      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
       gitHubStore.incrementPage();
     };
     window.addEventListener('scroll', handleScroll);
@@ -36,13 +34,12 @@ const MainPage: React.FC = () => {
   }, [debouncedTopic]);
 
   useEffect(() => {
-    if (!debouncedTopic) gitHubStore.getRepos(repsOwner, 6);
-    else gitHubStore.getRepos(repsOwner);
+    if (debouncedTopic) gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
+    else gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
   }, [gitHubStore.page, debouncedTopic]);
 
   useEffect(() => {
     localStorage.setItem('topic', topic);
-    gitHubStore.resetStore();
     const timeout = setTimeout(() => {
       setDebouncedTopic(topic);
     }, 1000);
@@ -105,7 +102,7 @@ const MainPage: React.FC = () => {
               let splicedDate = 'Updated ' + date.toString().split(' ')[2] + ' ' + date.toString().split(' ')[1];
               return (
                 <Link key={rep.id} to={`/${repsOwner}/${rep.name}`}>
-                  <div className={styles.repCard} onClick={() => localStorage.removeItem('topic')}>
+                  <div className={styles.repCard}>
                     <Card
                       image={rep.owner.avatar_url}
                       captionSlot={
