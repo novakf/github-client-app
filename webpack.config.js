@@ -3,6 +3,7 @@ import * as path from 'path';
 import { fileURLToPath } from 'url';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildPath = path.resolve(__dirname, 'dist');
@@ -84,6 +85,7 @@ export default {
     new MiniCssExtractPlugin({
       filename: '[name]-[hash].css',
     }),
+    new ForkTsCheckerWebpackPlugin(),
   ].filter(Boolean),
 
   resolve: {
