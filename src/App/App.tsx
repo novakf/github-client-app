@@ -1,20 +1,16 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from 'components/Header';
 import MainPage from './pages/MainPage';
 import RepositoryPage from './pages/RepositoryPage';
-import './App.css';
 
 const App: React.FC = () => {
   return (
     <BrowserRouter>
       <Header />
       <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/repository">
-          <Route path=":id" element={<RepositoryPage />} />
-        </Route>
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="/:owner?" element={<MainPage />} />
+        <Route path="/:owner/:repoName" element={<RepositoryPage />} />
       </Routes>
     </BrowserRouter>
   );

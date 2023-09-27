@@ -4,25 +4,39 @@ import Input from 'components/Input';
 import Button from 'components/Button';
 import SearchIcon from 'icons/SearchIcon';
 import Card from 'components/Card';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import styles from './MainPage.module.scss';
 import StarIcon from 'icons/StarIcon';
-import InfiniteScroll from './components/InfiniteScroll';
 import GitHubStore from 'store/GitHubStore/';
-import { observer, useLocalObservable } from 'mobx-react-lite';
-import { Meta } from 'store/GitHubStore/types';
+import { observer } from 'mobx-react-lite';
+import { Meta } from 'store/types';
 import Loader from 'components/Loader';
 
-const MainPage: React.FC = () => {
-  const gitHubStore = useLocalObservable(() => new GitHubStore());
+export const gitHubStore = new GitHubStore();
 
+const ONE_PAGE_LIMIT = 6;
+
+const MainPage: React.FC = () => {
   let storedTopic = localStorage.getItem('topic');
-  let repsOwner = '';
-  if (gitHubStore.list[0]) repsOwner = gitHubStore.list[0].owner.login;
+  let repsOwner = useParams().owner ? (useParams().owner as string) : '';
 
   const [topic, setTopic] = useState<string>(storedTopic ? storedTopic : '');
   const [debouncedTopic, setDebouncedTopic] = React.useState(storedTopic);
   const [inputValue, setInputValue] = useState<string>(repsOwner);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerHeight + document.documentElement.scrollTop !== document.documentElement.offsetHeight) return;
+      gitHubStore.incrementPage();
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [debouncedTopic]);
+
+  useEffect(() => {
+    if (debouncedTopic) gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
+    else gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
+  }, [gitHubStore.page, debouncedTopic]);
 
   useEffect(() => {
     localStorage.setItem('topic', topic);
@@ -31,10 +45,6 @@ const MainPage: React.FC = () => {
     }, 1000);
     return () => clearTimeout(timeout);
   }, [topic]);
-
-  if (gitHubStore.list.length !== 0) localStorage.setItem('reps', JSON.stringify(gitHubStore.list));
-
-  if (gitHubStore.meta === Meta.error) localStorage.removeItem('reps');
 
   const topicTarget = (target?: string[]) => {
     if (!target || !debouncedTopic) return true;
@@ -45,8 +55,8 @@ const MainPage: React.FC = () => {
   const handleOrgEnter = (event: React.KeyboardEvent) => {
     let value = (event.target as HTMLInputElement).value;
     if (event.key === 'Enter') {
-      localStorage.removeItem('reps');
       setInputValue(value);
+      window.location.replace(`/${value}`);
       gitHubStore.getRepos(value);
     }
   };
@@ -74,7 +84,7 @@ const MainPage: React.FC = () => {
         <Button
           className={styles.button}
           onClick={() => {
-            localStorage.removeItem('reps');
+            window.location.replace(`/${inputValue}`);
             gitHubStore.getRepos(inputValue);
           }}
         >
@@ -82,19 +92,17 @@ const MainPage: React.FC = () => {
         </Button>
       </div>
 
-      {gitHubStore.meta === Meta.success && gitHubStore.list.length !== 0 && (
+      {gitHubStore.list.length !== 0 && (
         <div className={styles.repsList}>
-          <InfiniteScroll
-            repsOwner={repsOwner}
-            itemsPerPage={6}
-            reps={gitHubStore.list.filter((rep) => topicTarget(rep.topics))}
-            renderRep={(rep) => {
+          {gitHubStore.list
+            .filter((rep) => topicTarget(rep.topics))
+            .map((rep) => {
               let date = new Date();
               if (rep.updated_at) date = new Date(rep.updated_at);
               let splicedDate = 'Updated ' + date.toString().split(' ')[2] + ' ' + date.toString().split(' ')[1];
               return (
-                <Link key={rep.id} to={`/repository/${rep.id}`}>
-                  <div className={styles.repCard} onClick={() => localStorage.removeItem('topic')}>
+                <Link key={rep.id} to={`/${repsOwner}/${rep.name}`}>
+                  <div className={styles.repCard}>
                     <Card
                       image={rep.owner.avatar_url}
                       captionSlot={
@@ -112,8 +120,7 @@ const MainPage: React.FC = () => {
                   </div>
                 </Link>
               );
-            }}
-          />
+            })}
         </div>
       )}
       {gitHubStore.meta === Meta.loading && (
