@@ -6,7 +6,7 @@ type Props = {
 };
 
 const Readme: React.FC<Props> = ({ file }) => {
-  let fileWithoutSvgLink = file.replace(/<svg.*<\/svg>/g, '');
+  let fileWithoutSvgLink = file.replace(/<svg.*<\/svg>/g, '').replace(/\n/g, '<br/>');
 
   return file ? (
     <div className={styles.readmeContainer}>

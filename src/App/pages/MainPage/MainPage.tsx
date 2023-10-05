@@ -15,7 +15,7 @@ import Loader from 'components/Loader';
 export const gitHubStore = new GitHubStore();
 
 const ONE_PAGE_LIMIT = 6;
-const TOPIC_LIMIT = 6;
+const TOPIC_LIMIT = 100;
 
 const MainPage: React.FC = () => {
   let storedTopic = localStorage.getItem('topic');
@@ -37,8 +37,8 @@ const MainPage: React.FC = () => {
   }, [debouncedTopic]);
 
   useEffect(() => {
-    if (debouncedTopic) gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
-    else gitHubStore.getRepos(repsOwner, TOPIC_LIMIT);
+    if (debouncedTopic) gitHubStore.getRepos(repsOwner, TOPIC_LIMIT);
+    else gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
   }, [gitHubStore.page, debouncedTopic]);
 
   useEffect(() => {
