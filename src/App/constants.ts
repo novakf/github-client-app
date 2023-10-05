@@ -1,1 +1,2 @@
-export const GITHUB_API_TOKEN = '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';
+export const GITHUB_API_TOKEN =
+  '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';
