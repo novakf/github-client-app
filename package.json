@@ -2,10 +2,13 @@
   "name": "git-client-app",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://novakf.github.io/github-client-app",
   "type": "module",
   "scripts": {
     "dev": "cross-env NODE_ENV=development npx webpack serve --mode=development",
     "build": "NODE_ENV=production npx webpack --mode=production",
+    "predeploy": "yarn build", 
+    "deploy": "gh-pages -d dist",
     "preview": "vite preview",
     "lint": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix"
@@ -50,6 +53,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
+    "gh-pages": "^6.0.0",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.3",
