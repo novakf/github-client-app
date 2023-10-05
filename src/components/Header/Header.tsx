@@ -2,10 +2,18 @@ import Text from 'components/Text';
 import styles from './Header.module.scss';
 import GitHubIcon from 'icons/GitHubIcon';
 import ProfileIcon from 'icons/PropfileIcon';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { observer, useLocalObservable } from 'mobx-react-lite';
+import ProfileStore from 'store/ProfileStore';
 
 const Header: React.FC = () => {
+  const profileStore = useLocalObservable(() => new ProfileStore());
+
+  useEffect(() => {
+    profileStore.getProfile();
+  }, [profileStore]);
+
   return (
     <div className={styles.header}>
       <Link to={'/'}>
@@ -16,9 +24,11 @@ const Header: React.FC = () => {
           GitHub Client
         </Text>
       </Link>
-      <ProfileIcon className={styles.profile} />
+      <Link className={styles.profile} to={`/profile/api-testing-profile`}>
+        <img src={profileStore.profile.avatar_url} className={styles.img} />
+      </Link>
     </div>
   );
 };
 
-export default Header;
+export default observer(Header);
