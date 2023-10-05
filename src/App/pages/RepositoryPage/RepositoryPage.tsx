@@ -21,6 +21,8 @@ const RepositoryPage: React.FC = () => {
   const repoStore = useLocalObservable(() => new RepoStore());
   let currentRepo = gitHubStore.list.filter((rep) => rep.name === useParams().repoName)[0];
 
+  document.body.style.background = 'white';
+
   useEffect(() => {
     owner && repoName && repoStore.getRepo(owner, repoName);
   }, [repoStore]);
@@ -43,9 +45,15 @@ const RepositoryPage: React.FC = () => {
     currentRepo.id && (
       <div className={styles.repContainer}>
         <div className={styles.titleContainer}>
-          <Link to={`/${owner}`}>
+          <div
+            onClick={() => {
+              if (history.length > 2) history.back();
+              else window.location.href = `/${owner}`;
+            }}
+            style={{ cursor: 'pointer' }}
+          >
             <ArrowLeftIcon />
-          </Link>
+          </div>
           <img className={styles.logo} src={currentRepo.owner.avatar_url} alt="avatar" />
           <Text className={styles.title} view="title">
             {currentRepo.name}

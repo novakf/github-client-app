@@ -15,6 +15,7 @@ import Loader from 'components/Loader';
 export const gitHubStore = new GitHubStore();
 
 const ONE_PAGE_LIMIT = 6;
+const TOPIC_LIMIT = 100;
 
 const MainPage: React.FC = () => {
   let storedTopic = localStorage.getItem('topic');
@@ -23,6 +24,8 @@ const MainPage: React.FC = () => {
   const [topic, setTopic] = useState<string>(storedTopic ? storedTopic : '');
   const [debouncedTopic, setDebouncedTopic] = React.useState(storedTopic);
   const [inputValue, setInputValue] = useState<string>(repsOwner);
+
+  document.body.style.background = '#f6f8fa';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -34,7 +37,7 @@ const MainPage: React.FC = () => {
   }, [debouncedTopic]);
 
   useEffect(() => {
-    if (debouncedTopic) gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
+    if (debouncedTopic) gitHubStore.getRepos(repsOwner, TOPIC_LIMIT);
     else gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
   }, [gitHubStore.page, debouncedTopic]);
 

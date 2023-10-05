@@ -28,6 +28,11 @@
   display: flex;
   padding: 32px;
   align-items: flex-start;
-  gap: 10px;
   flex: 1 0 0;
+}
+
+.noFile {
+  font-size: 18px;
+  font-family: sans-serif;
+  color: #656d76;
 }

@@ -1,0 +1,47 @@
+.profile {
+  @media (max-width: 600px) {
+    margin: 0 auto;
+  }
+}
+
+.avatarContainer {
+  max-width: 296px;
+  max-height: 296px;
+  border-radius: 50%;
+  border: 1px solid #c9c9c9;
+  overflow: hidden;
+}
+
+.avatarImg {
+  width: 100%;
+}
+
+.name {
+  margin-top: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: sans-serif;
+}
+
+.login {
+  font-size: 20px;
+  color: #656d76;
+  margin-bottom: 15px;
+}
+
+.info {
+  display: flex;
+  gap: 7px;
+}
+
+.text {
+  font-size: 14px;
+  font-family: sans-serif;
+  color: #1f2328;
+}
+
+.secondInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
