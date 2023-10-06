@@ -75,7 +75,7 @@ const RepositoryPage: React.FC = () => {
             <Languages languages={languagesStore.list} />
           </div>
         </div>
-        <Readme file={readmeStore.file} />
+        <Readme file={readmeStore.file} meta={readmeStore.meta} />
       </div>
     )
   );
