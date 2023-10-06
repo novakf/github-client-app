@@ -19,9 +19,9 @@ const Contributors: React.FC<Props> = ({ contributors }) => {
       </div>
       {contributors?.map((contributor) => {
         return (
-          <Link key={contributor.id} to={`/profile/${contributor.login}`} style={{ textDecoration: 'none' }}>
+          <a key={contributor.id} href={`#profile/${contributor.login}`} style={{ textDecoration: 'none' }}>
             <Contributor contributor={contributor} />
-          </Link>
+          </a>
         );
       })}
     </div>

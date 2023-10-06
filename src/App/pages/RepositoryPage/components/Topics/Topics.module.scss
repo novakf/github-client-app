@@ -15,4 +15,9 @@
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.08);
+  }
 }

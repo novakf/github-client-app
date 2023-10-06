@@ -11,6 +11,7 @@ import GitHubStore from 'store/GitHubStore/';
 import { observer } from 'mobx-react-lite';
 import { Meta } from 'store/types';
 import Loader from 'components/Loader';
+import GenericModal from 'components/Modal/GenericModal';
 
 export const gitHubStore = new GitHubStore();
 
@@ -39,7 +40,7 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     if (debouncedTopic) gitHubStore.getRepos(repsOwner, TOPIC_LIMIT);
     else gitHubStore.getRepos(repsOwner, ONE_PAGE_LIMIT);
-  }, [gitHubStore.page, debouncedTopic]);
+  }, [gitHubStore.page, debouncedTopic, repsOwner]);
 
   useEffect(() => {
     localStorage.setItem('topic', topic);
@@ -59,7 +60,8 @@ const MainPage: React.FC = () => {
     let value = (event.target as HTMLInputElement).value;
     if (event.key === 'Enter') {
       setInputValue(value);
-      window.location.replace(`/${value}`);
+      window.location.href = `#${value}`;
+      location.reload();
       gitHubStore.getRepos(value);
     }
   };
@@ -87,7 +89,7 @@ const MainPage: React.FC = () => {
         <Button
           className={styles.button}
           onClick={() => {
-            window.location.replace(`/${inputValue}`);
+            window.location.href = `#${inputValue}`;
             gitHubStore.getRepos(inputValue);
           }}
         >

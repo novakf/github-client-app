@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import Header from 'components/Header';
 import MainPage from './pages/MainPage';
 import RepositoryPage from './pages/RepositoryPage';
@@ -8,7 +8,7 @@ import CreateRepoPage from './pages/CreateRepoPage';
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Header />
       <Routes>
         <Route path="/new" element={<CreateRepoPage />} />
@@ -16,7 +16,7 @@ const App: React.FC = () => {
         <Route path="/profile/:login" element={<ProfilePage />} />
         <Route path="/:owner/:repoName" element={<RepositoryPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 };
 

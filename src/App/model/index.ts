@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { RepositoryType, ContributorType, ProfileType, Map } from 'App/types';
 import { Octokit } from 'octokit';
-import { GITHUB_API_TOKEN } from 'App/constants';
+import GITHUB_API_TOKEN from 'App/constants';
 
 const octokit = new Octokit({
   auth: GITHUB_API_TOKEN,

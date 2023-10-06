@@ -1,6 +1,6 @@
 import { Meta } from '../types';
 import { observable, computed, makeObservable, action, runInAction } from 'mobx';
-import { GITHUB_API_TOKEN } from 'App/constants';
+import GITHUB_API_TOKEN from 'App/constants';
 
 import { Octokit } from 'octokit';
 import axios from 'axios';
@@ -76,6 +76,7 @@ export default class ProfileStore {
     const result = await octokit.request('GET {url}', {
       url: url ? url : '/user/repos',
       visibility: 'all',
+      headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
     });
     runInAction(() => {
       this._meta = Meta.success;
@@ -92,10 +93,11 @@ export default class ProfileStore {
       private: privateRepo,
       auto_init: readme,
       is_template: true,
+      headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
     });
 
     runInAction(() => {
-      window.location.href = `/profile/api-testing-profile`;
+      window.location.href = `#profile/api-testing-profile`;
       this._meta = Meta.success;
     });
   }
@@ -105,6 +107,7 @@ export default class ProfileStore {
     await octokit.request('DELETE /repos/{owner}/{repo}', {
       owner: owner,
       repo: repoName,
+      headers: { Authorization: `Bearer ${GITHUB_API_TOKEN}` },
     });
 
     runInAction(() => {

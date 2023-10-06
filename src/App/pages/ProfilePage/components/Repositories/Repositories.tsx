@@ -4,7 +4,7 @@ import { RepositoryType } from 'App/types';
 import RepoContainer from './components/RepoContainer';
 import RepoIcon from 'icons/RepoIcon';
 import { Meta } from 'store/types';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 type Props = {
   repos: RepositoryType[];
@@ -19,9 +19,9 @@ const Repositories: React.FC<Props> = ({ repos, meta }) => {
       <div className={styles.action}>
         <div className={styles.title}>Popular repositories</div>
         {login === 'api-testing-profile' && (
-          <a href="/new" className={styles.createButton} style={{ textDecoration: 'none' }}>
+          <Link to="/new" className={styles.createButton} style={{ textDecoration: 'none' }}>
             <RepoIcon /> New
-          </a>
+          </Link>
         )}
       </div>
       <ul className={styles.reposList}>

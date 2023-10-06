@@ -1,6 +1,6 @@
 import { ProfileType } from 'App/types';
 import { observable, computed, makeObservable, action, runInAction } from 'mobx';
-import { GITHUB_API_TOKEN } from 'App/constants';
+import GITHUB_API_TOKEN from 'App/constants';
 import { Octokit } from 'octokit';
 import axios from 'axios';
 

@@ -48,7 +48,7 @@ const RepositoryPage: React.FC = () => {
           <div
             onClick={() => {
               if (history.length > 2) history.back();
-              else window.location.href = `/${owner}`;
+              else window.location.href = `profile/${owner}`;
             }}
             style={{ cursor: 'pointer' }}
           >

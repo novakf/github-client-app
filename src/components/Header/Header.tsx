@@ -1,7 +1,6 @@
 import Text from 'components/Text';
 import styles from './Header.module.scss';
 import GitHubIcon from 'icons/GitHubIcon';
-import ProfileIcon from 'icons/PropfileIcon';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { observer, useLocalObservable } from 'mobx-react-lite';
