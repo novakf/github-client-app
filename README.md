@@ -1,4 +1,4 @@
-# GitHub Client
+# GitHub Client (React + TS + Vite)
 
 Веб-приложение, взаимодействующее с GitHub Api.
 
