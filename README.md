@@ -1,30 +1,11 @@
-# React + TypeScript + Vite
+# GitHub Client
 
-!!If you need to send more, than 60 queries in hour, write your github personal token in file src/App/constants.ts:
-GITHUB_API_TOKEN = 'your_token'!!
+Веб-приложение, взаимодействующее с GitHub Api.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+По умолчанию API имеет ограничение на 60 запросов в час с одного IP-адреса. Чтобы увеличить ограничение до 5000 запросов в час, можно создать свой персональный токен и использовать его при обращении к Api.
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
+#### Для запуска проекта ввести
+```
+> npm run start
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
